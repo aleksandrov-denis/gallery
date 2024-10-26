@@ -42,6 +42,7 @@
 
         main {
             padding: 20px;
+	    margin-bottom: 60px;
         }
 
         footer {
@@ -95,7 +96,7 @@
 	}
 	.cpu { background-color: #4CAF50; } /* green */
 	.memory { background-color: #2196F3; } /* blue */
-	.disk { background-color: #f44336; } /* red */
+	.disk { background-color: #e60af5; } /* purple */
 
 	/* Centered percentage text */
 	.stat-percentage {
@@ -116,7 +117,13 @@
 		    fetch('/api/stats')
 		    	.then(response => response.json())
 		    	.then(data => {
-				updateBar('cpu', data.cpu_percent);
+				// updates usage and temp for each CPU core
+				data.cpu_percents.forEach((percent, index) => {
+					updateBar(`cpu-core-${index}`, percent);
+				});
+				data.cpu_temps.forEach((temp, index) => {
+					updateTemp(`cpu-temp-${index}`, temp);
+				});
 				updateBar('memory', data.memory);
 				updateBar('disk', data.disk);
 			})
@@ -128,6 +135,12 @@
 		const text = document.getElementById(id + '-text');
 		bar.style.width = value + '%';
 		text.innerText = value + '%';
+	    }
+
+	    function updateTemp(id, value) {
+		    console.log("Updating temperature:", id, value);
+		    const tempElement = document.getElementById(id);
+		    tempElement.innerText = value ? value + ' °C' : 'N/A';
 	    }
 
 	    function startFetching() {
@@ -169,16 +182,25 @@
             </section>
 
             <section id="stats" class="card">
-                <h2>Raspberry Pi System Stats</h2>
-		<p>CPU Usage:</p>
-		<div class="stat-bar-container">
-			<div id="cpu-bar" class="stat-bar cpu"></div>
-			<div id="cpu-text" class="stat-percentage">Loading...</div>
+		<div id="cpu-stats">
+			<script>
+				const cores = 4;
+				for (let i = 0; i < cores; i++) {
+					document.write(`
+						<p>CPU Core ${i} [<span id="cpu-temp-${i}">Loading...</span>]:</p>
+						<div class="stat-bar-container">
+							<div id="cpu-core-${i}-bar" class="stat-bar cpu"></div>
+							<div id="cpu-core-${i}-text" class="stat-percentage">Loading...</div>
+						</div>
+					`);
+
+				}
+			</script>
 		</div>
 		<p>Memory Usage:</p>
 		<div class="stat-bar-container">
-			    <div id="memory-bar" class="stat-bar memory"></div>
-			    <div id="memory-text" class="stat-percentage">Loading...</div>
+			<div id="memory-bar" class="stat-bar memory"></div>
+			<div id="memory-text" class="stat-percentage">Loading...</div>
 		</div>
 		<p>Disk Usage:</p>
 		<div class="stat-bar-container">

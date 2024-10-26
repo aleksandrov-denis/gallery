@@ -17,8 +17,19 @@ def contact():
 
 @app.route('/api/stats')
 def api_stats():
+    # CPU usage per core
+    cpu_percents = psutil.cpu_percent(percpu=True)
+    # temp for each core
+    temps = psutil.sensors_temperatures()
+    cpu_temps = [temp.current for temp in temps.get('cpu_thermal', temps.get('coretemp', []))]
+    
+    # if only one temperature read, then replicate for all cores
+    if len(cpu_temps) == 1:
+        cpu_temps = cpu_temps * len(cpu_percents)
+
     stats = {
-        'cpu_percent': psutil.cpu_percent(interval=1),
+        'cpu_percents': cpu_percents,
+        'cpu_temps': cpu_temps,
         'memory': psutil.virtual_memory().percent,
         'disk': psutil.disk_usage('/').percent
     }
