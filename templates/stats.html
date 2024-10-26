@@ -79,6 +79,36 @@
         a:hover {
             text-decoration: underline;
         }
+	/* Styling for the progress bars */
+	.stat-bar-container {
+		position: relative;
+		width: 100%;
+		background-color: #2b2b2b;
+		border-radius: 5px;
+		margin: 10px 0;
+		height: 24px;
+		overflow: hidden;
+	}
+	.stat-bar {
+		height: 100%;
+		border-radius: 5px;
+	}
+	.cpu { background-color: #4CAF50; } /* green */
+	.memory { background-color: #2196F3; } /* blue */
+	.disk { background-color: #f44336; } /* red */
+
+	/* Centered percentage text */
+	.stat-percentage {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #e0e0e0;
+	}
     </style>
     <script>
 	    // Function to fetch system stats and update the page
@@ -86,11 +116,18 @@
 		    fetch('/api/stats')
 		    	.then(response => response.json())
 		    	.then(data => {
-				document.getElementById('cpu').innerText = data.cpu_percent + '%';
-				document.getElementById('memory').innerText = data.memory + '%';
-				document.getElementById('disk').innerText = data.disk + '%';
+				updateBar('cpu', data.cpu_percent);
+				updateBar('memory', data.memory);
+				updateBar('disk', data.disk);
 			})
 		    	.catch(error => console.error('Error fetching stats:', error));
+	    }
+
+	    function updateBar(id, value) {
+	    	const bar = document.getElementById(id + '-bar');
+		const text = document.getElementById(id + '-text');
+		bar.style.width = value + '%';
+		text.innerText = value + '%';
 	    }
 
 	    function startFetching() {
@@ -133,9 +170,21 @@
 
             <section id="stats" class="card">
                 <h2>Raspberry Pi System Stats</h2>
-		<p>CPU Usage: <span id="cpu">Loading...</span></p>
-		<p>Memory Usage: <span id="memory">Loading...</span></p>
-		<p>Disk Usage: <span id="disk">Loading...</span></p>
+		<p>CPU Usage:</p>
+		<div class="stat-bar-container">
+			<div id="cpu-bar" class="stat-bar cpu"></div>
+			<div id="cpu-text" class="stat-percentage">Loading...</div>
+		</div>
+		<p>Memory Usage:</p>
+		<div class="stat-bar-container">
+			    <div id="memory-bar" class="stat-bar memory"></div>
+			    <div id="memory-text" class="stat-percentage">Loading...</div>
+		</div>
+		<p>Disk Usage:</p>
+		<div class="stat-bar-container">
+			<div id="disk-bar" class="stat-bar disk"></div>
+			<div id="disk-text" class="stat-percentage">Loading...</div>
+		</div>
             </section>
         </div>
     </main>
