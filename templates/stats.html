@@ -3,115 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=IBM Plex Mono" rel="stylesheet">
     <title>Raspberry Pi System Stats</title>
-    <style>
-        body {
-            font-family: 'IBM Plex Mono', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #121212;
-            color: #e0e0e0;
-        }
-
-        header {
-            background-color: #1f1f1f;
-            color: #ffffff;
-            padding: 20px 0;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        nav {
-            background-color: #2b2b2b;
-            padding: 10px;
-            text-align: center;
-        }
-
-        nav a {
-            color: #ffffff;
-            padding: 14px 20px;
-            text-decoration: none;
-            text-transform: uppercase;
-            margin: 0 10px;
-        }
-
-        nav a:hover {
-            background-color: #444444;
-            color: #b3e5fc;
-        }
-
-        main {
-            padding: 20px;
-	    margin-bottom: 60px;
-        }
-
-        footer {
-            background-color: #1f1f1f;
-            color: #9e9e9e;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .card {
-            background-color: #1e1e1e;
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .card h2 {
-            color: #b3e5fc;
-        }
-
-        a {
-            color: #b3e5fc;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-	/* Styling for the progress bars */
-	.stat-bar-container {
-		position: relative;
-		width: 100%;
-		background-color: #2b2b2b;
-		border-radius: 5px;
-		margin: 10px 0;
-		height: 24px;
-		overflow: hidden;
-	}
-	.stat-bar {
-		height: 100%;
-		border-radius: 5px;
-	}
-	.cpu { background-color: #4CAF50; } /* green */
-	.memory { background-color: #2196F3; } /* blue */
-	.disk { background-color: #e60af5; } /* purple */
-
-	/* Centered percentage text */
-	.stat-percentage {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: #e0e0e0;
-	}
-    </style>
+    <link rel="stylesheet" href="../static/styles.css">
     <script>
 	    // Function to fetch system stats and update the page
 	    function fetchSystemStats() {
@@ -144,7 +37,7 @@
 		    tempElement.innerText = value ? value + ' °C' : 'N/A';
 	    }
 
-	    function startFetching() {
+	    /*function startFetching() {
 		    fetchSystemStats();
 		    intervalId = setInterval(fetchSystemStats, 2000); // Fetch stats every 2 seconds
 	    }
@@ -157,7 +50,9 @@
 	    window.onload = startFetching;
 
 	    // Stop fetching when the pare is unloaded
-	    window.onbeforeunload = stopFetching;
+	    window.onbeforeunload = stopFetching;*/
+	    fetchSystemStats();
+	    intervalId = setInterval(fetchSystemStats, 3000); // Fetch stats every 2 seconds
     </script>
 </head>
 <body>
