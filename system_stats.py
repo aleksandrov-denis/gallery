@@ -5,7 +5,12 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-        return render_template('stats.html')
+    return render_template('index.html')
+
+@app.route('/stats.html')
+def stats():
+    return render_template('stats.html')
+
 
 @app.route('/projects.html')
 def projects():
