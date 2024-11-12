@@ -120,4 +120,31 @@ a:hover {
     justify-content: center;
     color: #e0e0e0;
 }
-\
+
+/* General styles remain unchanged */
+.bio {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.photo img {
+    width: 150px;         /* Adjust size as needed */
+    height: 150px;
+    border-radius: 50%;   /* Makes the image circular */
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.description {
+    max-width: 600px;
+}
+
+@media (max-width: 768px) {
+    .bio {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
