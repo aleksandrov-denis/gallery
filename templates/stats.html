@@ -37,9 +37,9 @@
 		    tempElement.innerText = value ? value + ' °C' : 'N/A';
 	    }
 
-	    /*function startFetching() {
+	    function startFetching() {
 		    fetchSystemStats();
-		    intervalId = setInterval(fetchSystemStats, 2000); // Fetch stats every 2 seconds
+		    intervalId = setInterval(fetchSystemStats, 5000); // Fetch stats every 5 seconds
 	    }
 
 	    function stopFetching() {
@@ -49,10 +49,8 @@
 	    // Start fetching when the page loads
 	    window.onload = startFetching;
 
-	    // Stop fetching when the pare is unloaded
-	    window.onbeforeunload = stopFetching;*/
-	    fetchSystemStats();
-	    intervalId = setInterval(fetchSystemStats, 3000); // Fetch stats every 2 seconds
+	    // Stop fetching when the page is unloaded
+	    window.onbeforeunload = stopFetching;
     </script>
 </head>
 <body>

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify
-import psutil
+import json
+import os
 
 app = Flask(__name__)
 
@@ -22,22 +23,16 @@ def contact():
 
 @app.route('/api/stats')
 def api_stats():
-    # CPU usage per core
-    cpu_percents = psutil.cpu_percent(percpu=True)
-    # temp for each core
-    temps = psutil.sensors_temperatures()
-    cpu_temps = [temp.current for temp in temps.get('cpu_thermal', temps.get('coretemp', []))]
-    
-    # if only one temperature read, then replicate for all cores
-    if len(cpu_temps) == 1:
-        cpu_temps = cpu_temps * len(cpu_percents)
-
-    stats = {
-        'cpu_percents': cpu_percents,
-        'cpu_temps': cpu_temps,
-        'memory': psutil.virtual_memory().percent,
-        'disk': psutil.disk_usage('/').percent
-    }
+    try:
+        with open('/tmp/system_stats.json', 'r') as f:
+            stats = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        stats = {
+                'cpu_percents': [0] * 4,
+                'cpu_temps': [0] * 4,
+                'memory': 0,
+                'disk': 0
+                }
     return jsonify(stats)
 
 if __name__ == '__main__':
