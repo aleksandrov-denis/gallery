@@ -41,6 +41,17 @@ main {
     margin-bottom: 60px;
 }
 
+/* Landing page style */
+.main_landing {
+	display: flex;
+	flex-direction:column;
+	align-items: center;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+	margin-bottom: 60px;
+}
+
 footer {
     background-color: #1f1f1f;
     color: #9e9e9e;
@@ -138,7 +149,7 @@ a:hover {
 }
 
 .description {
-    max-width: 600px;
+    max-width: 1050px;
 }
 
 @media (max-width: 768px) {
