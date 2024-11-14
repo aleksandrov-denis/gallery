@@ -1,5 +1,5 @@
 FLASKAPP = flaskapp
-STATS_COLLECTOR = stats_collector.service
+STATS_COLLECTOR = stats_collector
 
 # Restart both services
 restart:
