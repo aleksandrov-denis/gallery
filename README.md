@@ -9,8 +9,7 @@ This is a personal website running on a Raspberry Pi 3
 You need the following set up in order to run the systemd services used in this project.
 
 ## Dependencies
-
-```sudo dnf install python3-pip make; pip3 install flask psutil;```
+```sudo dnf install python3-pip make; pip3 install flask psutil```
 
 ## Systemd service setup
 
