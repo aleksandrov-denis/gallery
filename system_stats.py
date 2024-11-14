@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify
 import json
 import os
+from vigenere.vigenere import decrypt_vigenere
 
 app = Flask(__name__)
 
@@ -16,6 +17,17 @@ def stats():
 @app.route('/projects.html')
 def projects():
     return render_template('projects.html')
+
+@app.route('/api/decrypt', methods=['POST'])
+def decrypt():
+    data = request.get_json()
+    encrypted_text = data.get('encrypted_text')
+
+    if not encrypted_text:
+        return jsonify({'decrypted_text': 'No encrypted text provided'}), 400
+
+    decrypted_text = decrypt_vigenere(encrypted_text)
+    return jsonify({"decrypted_text": decrypted_text})
 
 @app.route('/contact.html')
 def contact():

@@ -19,6 +19,38 @@
     </nav>
     
     <main>
+	    <div class="decryptor">
+		    <h2>Vigenère Cipher Decryptor</h2>
+		    <label for="encryptedText">Encrypted Text:</label>
+		    <input type="text" id="encryptedText" name="encryptedText" placeholder="Enter encrypted text here">
+
+		    <button onclick="decryptText()">Decrypt</button>
+
+		    <h3>Decrypted Text:</h3>
+		    <p id="decryptedText">Enter text</p>
+	    </div>
+
+	    <script>
+		    function decryptText() {
+			    const encryptedText = document.getElementById('encryptedText').value;
+			    
+			    fetch('/api/decrypt', {
+				    method: 'POST',
+				    headers: {
+					    'Content-Type': 'application/json'
+				    },
+				    body: JSON.stringify({ encrypted_text: encryptedText })
+			    })
+				    .then(response => response.json())
+				    .then(data => {
+					    document.getElementById('decryptedText').innerText = data.decrypted_text || 'Decryption failed';})
+				    .catch(error => {
+					    console.error('Error:', error);
+					    document.getElementById('decryptedText').innerText = 'Error occured during decryption';
+				    });
+		    }
+	    </script>
+
         <section>
             <h2>Project Title 1</h2>
             <p>Description of project 1. This project involves...</p>
